@@ -65,7 +65,7 @@ function App() {
   const projects = [
     {
       name: 'ACOOMH Aplicație Mobilă',
-      description: 'O aplicație mobilă completă pentru managementul sănătății cu o experiență de utilizare intuitivă.',
+      description: 'O aplicație mobilă completă pentru descoperirea orasului tau cu o experiență de utilizare intuitivă.',
       images: [acoomhApp1, acoomhApp2, acoomhApp3, acoomhApp4],
       tags: ['Mobile', 'Sănătate', 'React Native'],
     },
