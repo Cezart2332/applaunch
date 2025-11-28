@@ -19,6 +19,7 @@ function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [activeProject, setActiveProject] = useState(0)
   const [currentSlide, setCurrentSlide] = useState(0)
+  const [activeTestimonial, setActiveTestimonial] = useState(0)
   const sliderRef = useRef(null)
 
   useEffect(() => {
@@ -118,24 +119,23 @@ function App() {
 
   const testimonials = [
     {
-      name: 'Maria Popescu',
-      role: 'CEO, TechStart România',
-      avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop&crop=face',
-      text: 'AppLaunch ne-a transformat viziunea într-o aplicație mobilă superbă. Echipa lor a fost profesionistă, receptivă și a livrat peste așteptările noastre.',
+      name: 'Dan Olteanu',
+      role: 'Fondator Dan fost Anxios aplicație pentru anxietate',
+      text: `Cezar a fost developerul aplicației mele despre anxietate și pot spune sincer că a fost o colaborare foarte prietenoasă. Mi-a plăcut mult cât de repede înțelegea ce aveam nevoie și cât de rapid îmi răspundea de fiecare dată. Mi-a dat impresia că, indiferent ce provocare apărea, găsea imediat o soluție, de parcă nimic nu îl putea opri.
+              Am simțit mereu că lucrez cu cineva foarte sigur pe el, care știe ce face și este deschis să găsească cea mai bună variantă pentru proiect. A fost implicat, atent la detalii și dispus să facă lucrurile să iasă cât mai bine.
+              Pe scurt, cu Cezar am simțit că sunt pe mâini bune. Îl recomand cu încredere oricui își dorește un developer serios, capabil și ușor de lucrat cu el. Și chiar îl consider mai mult decât un developer care a lucrat la aplicația mea, îl consider un prieten.`,
       rating: 5,
     },
     {
       name: 'Alexandru Ionescu',
       role: 'Fondator, HealthTech Solutions',
-      avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face',
-      text: 'Colaborarea cu AppLaunch a fost o plăcere. Au înțeles cerințele noastre complexe și au livrat o platformă robustă la timp.',
+      text: 'Colaborarea cu AppLaunch a fost o plăcere. Au înțeles cerințele noastre complexe și au livrat o platformă robustă la timp. Echipa a fost mereu disponibilă și a comunicat transparent pe tot parcursul proiectului.',
       rating: 5,
     },
     {
       name: 'Elena Dumitrescu',
       role: 'Product Manager, InnovateCo',
-      avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop&crop=face',
-      text: 'Atenția la detalii și calitatea designului au depășit așteptările noastre. Utilizatorii adoră noua interfață!',
+      text: 'Atenția la detalii și calitatea designului au depășit așteptările noastre. Utilizatorii adoră noua interfață! Recomand cu căldură pentru orice proiect de dezvoltare.',
       rating: 5,
     },
   ]
@@ -395,23 +395,53 @@ function App() {
             </p>
           </div>
           
-          <div className="testimonials-grid">
-            {testimonials.map((testimonial, index) => (
-              <div key={index} className="testimonial-card">
+          <div className="testimonials-slider-container">
+            <button 
+              className="slider-btn slider-prev" 
+              onClick={() => setActiveTestimonial(prev => prev === 0 ? testimonials.length - 1 : prev - 1)}
+              aria-label="Testimonial anterior"
+            >
+              ←
+            </button>
+            
+            <div className="testimonial-slide">
+              <div className="testimonial-card-slider">
+                <div className="testimonial-quote-icon">❝</div>
                 <div className="testimonial-rating">
-                  {[...Array(testimonial.rating)].map((_, i) => (
+                  {[...Array(testimonials[activeTestimonial].rating)].map((_, i) => (
                     <span key={i} className="star">⭐</span>
                   ))}
                 </div>
-                <p className="testimonial-text">"{testimonial.text}"</p>
-                <div className="testimonial-author">
-                  <img src={testimonial.avatar} alt={testimonial.name} className="testimonial-avatar" />
+                <p className="testimonial-text-slider">{testimonials[activeTestimonial].text}</p>
+                <div className="testimonial-author-slider">
+                  <div className="testimonial-author-icon">
+                    {testimonials[activeTestimonial].name.charAt(0)}
+                  </div>
                   <div className="testimonial-info">
-                    <h4 className="testimonial-name">{testimonial.name}</h4>
-                    <p className="testimonial-role">{testimonial.role}</p>
+                    <h4 className="testimonial-name">{testimonials[activeTestimonial].name}</h4>
+                    <p className="testimonial-role">{testimonials[activeTestimonial].role}</p>
                   </div>
                 </div>
               </div>
+            </div>
+            
+            <button 
+              className="slider-btn slider-next" 
+              onClick={() => setActiveTestimonial(prev => prev === testimonials.length - 1 ? 0 : prev + 1)}
+              aria-label="Testimonial următor"
+            >
+              →
+            </button>
+          </div>
+          
+          <div className="testimonial-dots">
+            {testimonials.map((_, index) => (
+              <button
+                key={index}
+                className={`testimonial-dot ${activeTestimonial === index ? 'active' : ''}`}
+                onClick={() => setActiveTestimonial(index)}
+                aria-label={`Mergi la testimonialul ${index + 1}`}
+              />
             ))}
           </div>
         </div>
